@@ -1,0 +1,126 @@
+CREATE TABLE review_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    good_id INT NOT NULL,
+    from_user_id INT NOT NULL,
+    to_user_id INT NOT NULL,
+    text TEXT NOT NULL,
+    upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status INT
+);
+
+CREATE TABLE good_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    photo_url VARCHAR(255),
+    first_type_id INT NOT NULL,
+    second_type_id INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL, -- 修正拼写
+    description TEXT, -- 修改 `describe` 避免关键字冲突
+    user_id INT NOT NULL,
+    status_id INT NOT NULL,
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 修改 `update` 避免关键字冲突
+);
+CREATE TABLE user_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    mobile VARCHAR(20) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    code VARCHAR(50),
+    photo_url VARCHAR(500),
+    role_id INT,
+    gender VARCHAR(255),
+    register_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status_id INT
+);
+
+CREATE TABLE first_type_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE second_type_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_type_id INT,
+    name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (first_type_id) REFERENCES first_type_table(id)
+);
+
+CREATE TABLE reply_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    review_id INT NOT NULL,
+    from_user VARCHAR(255) NOT NULL,
+    from_user_id INT NOT NULL,
+    to_user VARCHAR(255),
+    to_user_id INT,
+    text TEXT NOT NULL,
+    upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status INT
+);
+
+CREATE TABLE collect_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    good_id INT NOT NULL,
+    user_id INT NOT NULL,
+    good_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE image_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    good_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    url VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE order_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    good_name VARCHAR(255) NOT NULL,
+    seller VARCHAR(255) NOT NULL,
+    seller_id INT NOT NULL,
+    customer VARCHAR(255) NOT NULL,
+    customer_id INT NOT NULL,
+    good_id INT NOT NULL,
+    money DECIMAL(10,2) NOT NULL,
+    status_id INT,
+    submit_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- 插入示例数据
+INSERT INTO review_table (good_id, from_user_id, to_user_id, text, upload_date, status) VALUES
+(1, 1, 2, 'Great quality, highly recommend!', NOW(), 1),
+(2, 2, 1, 'Fast delivery, thank you!', NOW(), 1);
+
+INSERT INTO user_table (name, mobile, email, password, code, photo_url, role_id, gender, register_date, status_id) VALUES
+('Alice', '1234567890', 'alice@example.com', 'hashedpassword1', 'U123', 'https://example.com/alice.jpg', 1, 'female', NOW(), 1),
+('Bob', '0987654321', 'bob@example.com', 'hashedpassword2', 'U456', 'https://example.com/bob.jpg', 2, 'male', NOW(), 1);
+
+INSERT INTO first_type_table (name) VALUES
+('Electronics'),
+('Clothing');
+
+INSERT INTO second_type_table (first_type_id, name) VALUES
+(1, 'Mobile Phones'),
+(2, 'T-Shirts');
+
+INSERT INTO good_table (name, photo_url, first_type_id, second_type_id, price, description, user_id, status_id, upload_date) VALUES
+('iPhone 13', 'https://example.com/iphone13.jpg', 1, 1, 999.99, 'Brand new iPhone 13', 1, 1, NOW()),
+('Nike T-Shirt', 'https://example.com/nike-tshirt.jpg', 2, 2, 29.99, 'Comfortable Nike T-Shirt', 2, 1, NOW());
+
+INSERT INTO order_table (good_name, seller, seller_id, customer, customer_id, good_id, money, status_id, submit_date) VALUES
+('iPhone 13', 'Alice', 1, 'Bob', 2, 1, 999.99, 1, NOW()),
+('Nike T-Shirt', 'Bob', 2, 'Alice', 1, 2, 29.99, 1, NOW());
+
+INSERT INTO reply_table (review_id, from_user, from_user_id, to_user, to_user_id, text, upload_date, status) VALUES
+(1, 'Alice', 1, 'Bob', 2, 'Great product!', NOW(), 1),
+(2, 'Bob', 2, 'Alice', 1, 'Fast shipping, thanks!', NOW(), 1);
+
+INSERT INTO collect_table (good_id, user_id, good_name) VALUES
+(1, 2, 'iPhone 13'),
+(2, 1, 'Nike T-Shirt');
+
+INSERT INTO image_table (good_id, name, url) VALUES
+(1, 'Front View', 'https://example.com/iphone13-front.jpg'),
+(1, 'Back View', 'https://example.com/iphone13-back.jpg'),
+(2, 'Product Image', 'https://example.com/nike-tshirt.jpg');
