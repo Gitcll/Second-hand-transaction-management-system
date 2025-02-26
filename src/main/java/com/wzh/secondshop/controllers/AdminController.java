@@ -55,15 +55,14 @@ public class AdminController {
 //            if (!mdsPass .equals(admin.getPassword())){
 //                message = "用户密码错误！";
 //            }
-//            if (!mdsPass.equals(admin.getPassword())){
-//                message = "用户密码错误！";
-//            } else if (admin.getRoleId() != 101){
-//                message = "用户没有权限访问！";
-//            } else {
-//
-//            }
-            session.setAttribute("admin",admin);
-            return "redirect:/admin/adminPage";
+            if (!mdsPass.equals(admin.getPassword())){
+                message = "用户密码错误！";
+            } else if (admin.getRoleId() != 101){
+                message = "用户没有权限访问！";
+            } else {
+                session.setAttribute("admin",admin);
+                return "redirect:/admin/adminPage";
+            }
         } else {
             message = "用户不存在！";
         }
