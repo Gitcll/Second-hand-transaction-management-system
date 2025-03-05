@@ -210,3 +210,8 @@ target/wzh-secondshop.war
 target/classes/rebel.xml
 target/classes/SqlDDL
 .gitignore
+/target/classes/com/wzh/secondshop/services/LoginPasswordService.class
+/target/wzh-secondshop/WEB-INF/classes/com/wzh/secondshop/services/LoginPasswordService.class
+/target/wzh-secondshop/WEB-INF/classes/com/wzh/secondshop/mappers/LoginPasswordMapper.class
+/target/classes/com/wzh/secondshop/mappers/LoginPasswordMapper.class
+target/classes/com/wzh/secondshop/utils/DateUtils.class

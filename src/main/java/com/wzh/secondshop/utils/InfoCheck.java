@@ -28,4 +28,8 @@ public class InfoCheck {
 		return Pattern.matches(CHECK_MOBILE, mobile);
 	}
 
+	public boolean isNameLeng(String name) {
+		return name.length() > 10;
+	}
+
 }

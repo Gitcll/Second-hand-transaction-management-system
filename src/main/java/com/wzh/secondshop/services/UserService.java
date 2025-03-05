@@ -2,6 +2,7 @@ package com.wzh.secondshop.services;
 
 import com.wzh.secondshop.mappers.UserMapper;
 import com.wzh.secondshop.models.User;
+import com.wzh.secondshop.utils.InfoCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,10 @@ public class UserService {
 
 	@Transactional
 	public Boolean registerUser(User user) {
+		InfoCheck infoCheck = new InfoCheck();
+		if(infoCheck.isNameLeng(user.getName())){
+			return false;
+		}
 		return userMapper.insertUser(user) > 0;
 	}
 

@@ -85,7 +85,9 @@ public class HomeController {
         String status;
         Boolean insertSuccess;
         InfoCheck infoCheck = new InfoCheck();
-        if (!infoCheck.isMobile(user.getMobile())){
+        if(user.getName().length() > 10){
+            status = "姓名长度超过10位数！";
+        } else if (!infoCheck.isMobile(user.getMobile())){
             status = "请输入正确的手机号！";
         } else if (!infoCheck.isEmail(user.getEmail())){
             status = "请输入正确的邮箱！";

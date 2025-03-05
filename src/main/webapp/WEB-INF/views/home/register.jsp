@@ -31,7 +31,7 @@
 					<spring:bind path="name">
 						<div class="form-group">
 							<form:label path="name" cssClass="control-label">姓名</form:label>
-							<form:input path="name" cssClass="form-control"
+							<form:input path="name" cssClass="form-control" maxlength="10"
 								placeholder="请输入姓名"></form:input>
 						</div>
 					</spring:bind>
