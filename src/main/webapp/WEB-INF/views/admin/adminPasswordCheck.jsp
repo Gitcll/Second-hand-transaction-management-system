@@ -11,42 +11,39 @@
 <link rel="stylesheet" href="<c:url value="/statics/css/style.css"/>">
 </head>
 <body
-	style="background-image: url(<c:url value="/statics/image/background/loginbackground.jpg"/>); background-size: cover">
+	style="background-image: url(<c:url value="/statics/image/background/background2.jpg"/>); background-size: cover">
 	<div style="margin: 20px auto">
 		<div style="margin: 100px auto; margin-bottom: 40px" align="center">
-			<h1 style="font-size: 60px">欢迎登录校园二手交易平台</h1>
+			<h1 style="font-size: 60px; color: #ffffff">管理员登录变更密码</h1>
 		</div>
 	</div>
 
 	<div class="container" style="position: relative; margin: 80px auto;">
 		<div class="col-md-6 login-back"
 			style="position: absolute; left: 50%; transform: translateX(-50%);">
-			<form action="/wzh-secondshop/login" method="post">
-				<input id="preURL" name="preURL" value="${preURL}"
-					style="display: none">
+			<form action="<c:url value="/admin/adminPasswordCheck"/>" method="post">
 				<div class="form-group">
 					<label for="email">邮箱</label> <input class="form-control"
 						id="email" name="email" type="email" />
 				</div>
 
 				<div class="form-group">
-					<label for="password">密码</label> <input class="form-control"
+					<label for="password">旧密码</label> <input class="form-control"
 						id="password" name="password" type="password" />
+				</div>
+
+				<div class="form-group">
+					<label for="password2">新密码</label> <input class="form-control"
+						id="password2" name="password2" type="password" />
 				</div>
 
 				<div>
 					<output style="color: red">${message}</output>
 				</div>
 
-				<button style="margin-left: 10px; width: 45%" type="submit"
-					class="btn btn-primary">登录</button>
-				<a style="margin-left: 20px; width: 45%" class="btn btn-primary"
-					href="register">注册</a>
+				<button style="width: 100%" type="submit" class="btn btn-primary">登录变更密码</button>
 			</form>
-
-			<a href="/wzh-secondshop/admin/adminLogin">管理员登录</a>
-			<a style="text-align: center;" href="/wzh-secondshop/admin/adminPasswordCheck">管理员登录变更密码</a>
-			<a style="float: right" href="/wzh-secondshop">返回首页</a>
+			<a href="<c:url value="/login"/>">用户登录</a>
 		</div>
 	</div>
 	<script src="<c:url value="/statics/jquery-1.12.4/jquery-1.12.4.js"/>"></script>

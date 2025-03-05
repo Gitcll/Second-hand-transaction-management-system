@@ -1,6 +1,7 @@
 package com.wzh.secondshop.models;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 用户表
@@ -21,7 +22,13 @@ public class User {
 	private int statusId;
 	private String gender;
 	private String registerDate;
-
+	private Date endDate;
+	private String pwdRireki1;
+	private String pwdRireki2;
+	private String pwdRireki3;
+	private String pwdRireki4;
+	private Date updateDate;
+	
 	public int getStatusId() {
 		return statusId;
 	}
@@ -119,4 +126,55 @@ public class User {
 		this.registerDate = sdf.format(registerDate);
 	}
 
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public void setRegisterDate(String registerDate) {
+		this.registerDate = registerDate;
+	}
+
+	public String getPwdRireki1() {
+		return pwdRireki1;
+	}
+
+	public void setPwdRireki1(String pwdRireki1) {
+		this.pwdRireki1 = pwdRireki1;
+	}
+
+	public String getPwdRireki2() {
+		return pwdRireki2;
+	}
+
+	public void setPwdRireki2(String pwdRireki2) {
+		this.pwdRireki2 = pwdRireki2;
+	}
+
+	public String getPwdRireki3() {
+		return pwdRireki3;
+	}
+
+	public void setPwdRireki3(String pwdRireki3) {
+		this.pwdRireki3 = pwdRireki3;
+	}
+
+	public String getPwdRireki4() {
+		return pwdRireki4;
+	}
+
+	public void setPwdRireki4(String pwdRireki4) {
+		this.pwdRireki4 = pwdRireki4;
+	}
 }

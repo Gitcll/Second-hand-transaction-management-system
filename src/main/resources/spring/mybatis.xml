@@ -75,5 +75,8 @@
         <property name="mapperInterface" value="com.wzh.secondshop.mappers.CollectMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
-
+    <bean id="loginPasswordMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.wzh.secondshop.mappers.LoginPasswordMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 </beans>

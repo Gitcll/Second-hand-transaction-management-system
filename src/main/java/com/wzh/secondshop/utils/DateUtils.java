@@ -10,6 +10,7 @@ import java.util.Date;
 public class DateUtils {
 
     private static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_PATTERN);
 
     /**
      * 将 Date、Timestamp、LocalDateTime 转换为格式化字符串
@@ -22,12 +23,10 @@ public class DateUtils {
         }
 
         if (dateObj instanceof Date) {
-            SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_PATTERN);
             return sdf.format((Date) dateObj);
         }
 
         if (dateObj instanceof Timestamp) {
-            SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_PATTERN);
             return sdf.format((Timestamp) dateObj);
         }
 
@@ -49,7 +48,6 @@ public class DateUtils {
             return null;
         }
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_PATTERN);
             return sdf.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();

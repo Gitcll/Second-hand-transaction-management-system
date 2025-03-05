@@ -1,13 +1,9 @@
 package com.wzh.secondshop.controllers;
 
-import com.wzh.secondshop.models.FirstType;
-import com.wzh.secondshop.models.Good;
-import com.wzh.secondshop.models.Order;
-import com.wzh.secondshop.models.User;
-import com.wzh.secondshop.services.GoodService;
-import com.wzh.secondshop.services.OrderService;
-import com.wzh.secondshop.services.TypeService;
-import com.wzh.secondshop.services.UserService;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,8 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import com.wzh.secondshop.models.FirstType;
+import com.wzh.secondshop.models.Good;
+import com.wzh.secondshop.models.Order;
+import com.wzh.secondshop.models.User;
+import com.wzh.secondshop.services.GoodService;
+import com.wzh.secondshop.services.LoginPasswordService;
+import com.wzh.secondshop.services.OrderService;
+import com.wzh.secondshop.services.TypeService;
+import com.wzh.secondshop.services.UserService;
 
 @Controller
 @RequestMapping(value = "admin")
@@ -29,9 +32,11 @@ public class AdminController {
     private final GoodService goodService;
     private final TypeService typeService;
     private final OrderService orderService;
+    private final LoginPasswordService loginPasswordService;
 
     @Autowired
-    public AdminController(UserService userService, GoodService goodService, TypeService typeService, OrderService orderService) {
+    public AdminController(UserService userService, GoodService goodService, TypeService typeService, OrderService orderService, LoginPasswordService loginPasswordService) {
+        this.loginPasswordService = loginPasswordService;
         this.userService = userService;
         this.goodService = goodService;
         this.typeService = typeService;
@@ -121,4 +126,40 @@ public class AdminController {
         return ResponseEntity.ok(success);
     }
 
+    @RequestMapping(value = "/adminPasswordCheck", method = RequestMethod.GET)
+    public String getAdminLoginUpdatePassword(){
+        return "admin/adminPasswordCheck";
+    }
+
+    @RequestMapping(value = "/adminPasswordCheck", method = RequestMethod.POST)
+    public String passwordCheck(ModelMap model,
+                                 @RequestParam(value = "email", required = false) String email,
+                                 @RequestParam(value = "password", required = false) String password,
+                                 @RequestParam(value = "password2", required = false) String password2,
+                                 HttpSession session) {
+        User admin = userService.getUserByEmail(email);
+        String message = "";
+        if (admin != null){
+        	try {
+				loginPasswordService.passWordChangeProcess(admin, password, password2);
+			} catch (Exception e) {
+				model.addAttribute("message", e.getMessage());
+                return "admin/adminPasswordCheck";
+			}
+            String mdsPass = DigestUtils.md5DigestAsHex((password + admin.getCode()).getBytes());
+
+            if (!mdsPass.equals(admin.getPassword())){
+                message = "用户密码错误！";
+            } else if (admin.getRoleId() != 101){
+                message = "用户没有权限访问！";
+            } else {
+                session.setAttribute("admin",admin);
+                return "redirect:/admin/adminPage";
+            }
+        } else {
+            message = "用户不存在！";
+        }
+        model.addAttribute("message", message);
+        return "admin/adminPasswordCheck";
+    }
 }
